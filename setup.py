@@ -42,7 +42,7 @@ setup(
     install_requires=[
         "numpy",
         "scipy",
-        "ipywidget",
+        "ipywidgets",
         "matplotlib",
         "ipython",
         "scikit-image",
