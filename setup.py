@@ -17,7 +17,7 @@ with open("README.md", encoding="utf-8") as infile:
 
 
 setup(
-    name="dasp",
+    name="dasp-stacker",
     version=get_property("__version__"),
     description="Dimensionally aligned signal projection library",
     keywords=["signal processing", "signal", "visualization"],

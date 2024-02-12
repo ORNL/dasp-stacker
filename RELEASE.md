@@ -1,3 +1,5 @@
+# library will need build and twine
+
 # Publishing Checklist
 
 1. Run `pytest`
