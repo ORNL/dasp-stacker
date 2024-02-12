@@ -1,0 +1,20 @@
+name: dasp
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - numpy
+  - scipy
+  - scikit-image
+  - ca-certificates
+  - openssl
+  - pytest
+  - pre-commit
+  - matplotlib
+  - h5py
+  - certifi
+  - jupyter
+  - jupyterlab
+  - typing
+  - twine
+  - build
