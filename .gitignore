@@ -803,7 +803,7 @@ TSWLatexianTemp*
 *.webp
 
 # Portable Network Graphics
-*.png
+# *.png
 
 # Animated Portable Network Graphics
 *.apng
