@@ -2,7 +2,6 @@
 
 # https://madewithml.com/courses/mlops/makefile
 SHELL = /bin/bash
-VERSION := $(shell python -c "import dasp; print(dasp.__version__)")
 
 .PHONY: help
 help:
@@ -39,4 +38,4 @@ clean:
 
 .PHONY: test
 test:
-	pytest
+	conda run -n dasp pytest
