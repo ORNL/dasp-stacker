@@ -1,4 +1,4 @@
-# Contributing to TX2
+# Contributing to DASP-stacker
 
 Help in improving DASP-Stacker is welcome!
 
@@ -6,7 +6,7 @@ If you find a bug or think of an enhancement/improvement you would like to see,
 feel free to fill out an appropriate
 [issue](https://github.com/ORNL/dasp-stacker/issues/new).
 
-If you have a question, double check that it's not covered in the function documentation found in the[readme](https://github.com/ORNL/dasp-stacker/blob/main/README.md)
+If you have a question, double check that it's not covered in the function documentation found in the [readme](https://github.com/ORNL/dasp-stacker/blob/main/README.md)
 
 The notebooks in the [examples](https://github.com/ORNL/dasp-stacker/tree/main/examples) directory show the intended use of the functionality provided by the library.
 
