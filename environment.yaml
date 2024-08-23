@@ -16,5 +16,4 @@ dependencies:
   - jupyter
   - jupyterlab
   - typing
-  - twine
-  - build
+  - ipympl

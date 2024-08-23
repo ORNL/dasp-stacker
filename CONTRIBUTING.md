@@ -28,6 +28,6 @@ Any public functions and classes should be clearly documented with
 ## Development Setup
 
 ```bash
-mamba env create ......
+mamba env create -f environment.yaml
 pre-commit install
 ```

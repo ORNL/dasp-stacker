@@ -362,10 +362,10 @@ def sine_wave_creator(
             freq_add,
             sample_rate,
             duration,
-            harmonics,
             noise,
             wave_type,
             num_signals - 1,
+            harmonics,
         )
         out_signal += other_sig
 
