@@ -29,7 +29,7 @@ Here are some of the main features of the dasp-stacker library:
 * Interactive visualization for HASP algorithms (selecting one at a time).
 * Interactive visualization for sine wave generation.
 
-The features of this library can be thought of as 2 seperate sections. One being simple to use functions to provide raw output of the DASP algorithms, which is the main function of this library. As an added set of features, several visualizations are provided to help develop an intuitive understanding of the HASP algorithms, as well as an interactive signal generation function.
+The features of this library can be thought of as 2 seperate sections. One being simple to use functions to provide raw output of the DASP algorithms, which is the main functionality. As an added set of features, several visualizations are provided to help develop an intuitive understanding of the HASP algorithms, as well as an interactive signal generation function.
 
 The following sections are a breakout of the recommended usage for the available features of the dasp-stacker library. An example of actual function calls, along with the output, can be seen in 'examples/dasp_example_notebook.ipynb'.
 
@@ -83,10 +83,10 @@ Fixed Harmonically Aligned Signal Projection generates a HASP array, using a fix
 Decimating Harmonically Aligned Signal Projection generates a HASP array, allowing bandwidth around the frequency center to grow as the harmonics increase before downsampling each row to the minimum bandwidth size.
 
 ##### Parameters
-* sample_rate (int): Rate at which the the raw time domain signal was acquired or generated.
+* sample_rate (int): Rate at which the the raw time domain signal was acquired or generated, in samples per second.
 * fft (np.ndarray): The Fast Fourier Transform of the signal.
 * bandwidth (int): How many hertz to include around the frequency center.
-* freq_center: The frequency center of the raw time domain signal.
+* freq_center: The frequency center of the raw time domain signal, in hertz.
 * use_row_norm (bool): Whether to normalize across each FFT individually.
 * use_im_norm (bool): Whether to normalize the entire final image.
 * max_harmonics: The upper limit of harmonics to include in final HASP array.
@@ -109,10 +109,10 @@ Decimating Harmonically Aligned Signal Projection generates a HASP array, allowi
 Interpolating Harmonically Aligned Signal Projection generates a HASP array, allowing bandwidth around the frequency center to grow as the harmonics increase before upsampling each row to the maximum bandwidth size.
 
 ##### Parameters
-* sample_rate (int): Rate at which the the raw time domain signal was acquired or generated.
+* sample_rate (int): Rate at which the the raw time domain signal was acquired or generated, as samples per second.
 * fft (np.ndarray): The Fast Fourier Transform of the signal.
 * bandwidth (int): How many hertz to include around the frequency center.
-* freq_center (int): The frequency center of the raw time domain signal.
+* freq_center (int): The frequency center of the raw time domain signal, in hertz.
 * use_row_norm (bool): Whether to normalize across each FFT individually.
 * use_im_norm (bool): Whether to normalize the entire final image.
 * max_harmonics (int): The upper limit of harmonics to include in final HASP array.
