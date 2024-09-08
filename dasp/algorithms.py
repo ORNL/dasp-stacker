@@ -65,10 +65,10 @@ def hasp_fixed(
     """Fixed HASP (Harmonically Aligned Signal Projection) algorithm generates a HASP array.
 
     Args:
-        sample_rate (int): Rate at which the the raw time domain signal was acquired or generated.
+        sample_rate (int): Rate at which the the raw time domain signal was acquired or generated, as sample per second.
         fft (np.ndarray): The Fast Fourier Transform of the signal.
         bandwidth (int): How many hertz to include around the frequency center.
-        freq_center: The frequency center of the raw time domain signal.
+        freq_center: The frequency center of the raw time domain signal, in hertz.
         use_row_norm (bool): Whether to normalize across each FFT individually.
         use_im_norm (bool): Whether to normalize the entire final image.
         max_harmonics: The upper limit of harmonics to include in final HASP array.
@@ -138,10 +138,10 @@ def hasp_decim(
     """Decimating HASP (Harmonically Aligned Signal Projection) algorithm generates a HASP array.
 
     Args:
-        sample_rate (int): Rate at which the the raw time domain signal was acquired or generated.
+        sample_rate (int): Rate at which the the raw time domain signal was acquired or generated, as sample per second.
         fft (np.ndarray): The Fast Fourier Transform of the signal.
         bandwidth (int): How many hertz to include around the frequency center.
-        freq_center: The frequency center of the raw time domain signal.
+        freq_center: The frequency center of the raw time domain signal, in hertz.
         use_row_norm (bool): Whether to normalize across each FFT individually.
         use_im_norm (bool): Whether to normalize the entire final image.
         max_harmonics: The upper limit of harmonics to include in final HASP array.
@@ -211,10 +211,10 @@ def hasp_interp(
     """Interpolating HASP (Harmonically Aligned Signal Projection) algorithm generates a HASP array.
 
     Args:
-        sample_rate (int): Rate at which the the raw time domain signal was acquired or generated.
+        sample_rate (int): Rate at which the the raw time domain signal was acquired or generated, as sample per second.
         fft (np.ndarray): The Fast Fourier Transform of the signal.
         bandwidth (int): How many hertz to include around the frequency center.
-        freq_center (int): The frequency center of the raw time domain signal.
+        freq_center (int): The frequency center of the raw time domain signal, in hertz.
         use_row_norm (bool): Whether to normalize across each FFT individually.
         use_im_norm (bool): Whether to normalize the entire final image.
         max_harmonics (int): The upper limit of harmonics to include in final HASP array.

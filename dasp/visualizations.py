@@ -164,6 +164,26 @@ def hasp_update(
     output: widgets.Output,
     alg_type: str = "fixed",
 ):
+    """
+    Updates HASP plots based on the provided input data.
+
+    Args:
+        sample_rate: The sample rate used for the HASP plot.
+        fft: The Fast Fourier Transform (FFT) of the input signal.
+        use_row_norm: Whether to use row normalization for the HASP plot.
+        use_im_norm: Whether to use image normalization for the HASP plot.
+        freq_center: The frequency center used for the HASP plot.
+        bandwidth: The bandwidth used for the HASP plot.
+        max_harmonics: The maximum number of harmonics to display.
+        scale_image: Whether to scale the image for the HASP plot.
+        fig: The figure canvas to use for plotting.
+        ax: The axis to use for plotting.
+        output: The output widget to display the plot in.
+        alg_type: The type of HASP algorithm used (e.g. "Fixed HASP"). Defaults to "fixed".
+
+    Returns:
+        None
+    """
     if alg_type == "fixed":
         hasp_array = hasp_fixed(
             sample_rate=sample_rate,
@@ -216,6 +236,19 @@ def hasp_update(
 
 
 def hasp_viz(signal, freq_center, sample_rate):
+    """
+    Visualizes the HASP algorithm(s).
+
+    Creates an interactive visualization of the HASP algorithm(s) using the provided input data.
+
+    Args:
+        signal: The input signal to visualize.
+        freq_center: The frequency center of the input signal.
+        sample_rate: The sample rate of the input signal.
+
+    Returns:
+        UI: The object containing the visualizations.
+    """
     # create FFT, needed for hasp_fixed call
     fft = gen_fft(signal)
 
@@ -327,6 +360,27 @@ def hasp_viz(signal, freq_center, sample_rate):
 def sine_wave_creator(
     base_freq, sample_rate, duration, noise, wave_type, num_signals, harmonics=0
 ):
+    """
+    Creates a sine wave signal with specified characteristics.
+
+    Generates a sine wave signal with the specified base frequency, sample rate, duration,
+    and noise level. The wave type can be either 'base', 'square', 'sawtooth', or 'triangle', and the signal can be
+    generated with a specified number of harmonics.
+
+    Args:
+        base_freq: The base frequency of the sine wave.
+        sample_rate: The sample rate of the sine wave.
+        duration: The duration of the sine wave.
+        noise: The level of noise to add to the sine wave.
+        wave_type: The type of sine wave to generate ('base', 'square', 'sawtooth', or 'triangle').
+        num_signals: The number of signals to generate.
+        harmonics: The number of harmonics to include in the signal (default=0).
+
+    Returns:
+        out_signal: The generated sine wave signal.
+        time: The associated time array of the generated signal.
+    """
+
     base_freq = base_freq
     sample_rate = sample_rate
     duration = duration
@@ -356,8 +410,9 @@ def sine_wave_creator(
     else:
         out_signal = base_sig
 
+    # recursively add signals based on the num_signals input parameter
     if num_signals > 1:
-        freq_add = int(base_freq + np.sqrt(1))
+        freq_add = int(base_freq + np.sqrt(base_freq))
         other_sig, time = sine_wave_creator(
             freq_add,
             sample_rate,
@@ -369,15 +424,31 @@ def sine_wave_creator(
         )
         out_signal += other_sig
 
-    # pyharmonics
-    # sine of each of the frequencies then add them up
-
     return out_signal, time
 
 
 def sig_update(
     base_freq, sample_rate, duration, harmonics, noise, wave_type, num_signals, fig, ax
 ):
+    """
+    Updates the signal plot with the specified parameters.
+
+    This function is used in combination with the sig_viewer function.
+
+    Args:
+        base_freq: The base frequency of the sine wave.
+        sample_rate: The sample rate of the sine wave.
+        duration: The duration of the sine wave.
+        harmonics: The number of harmonics included in the signal.
+        noise: The level of noise to add to the signal.
+        wave_type: The type of wave to generate ('sine' or 'cosine').
+        num_signals: The number of signals to generate.
+        fig: The figure to plot the signal on.
+        ax: The axes to plot the signal on.
+
+    Returns:
+        None
+    """
     sig, time = sine_wave_creator(
         base_freq=base_freq,
         sample_rate=sample_rate,
@@ -394,6 +465,24 @@ def sig_update(
 
 
 def sig_viewer(base_freq, sample_rate, duration, harmonics, wave_type, num_signals):
+    """
+    Generates a signal based on the given inputs and creates an interactive visualization,
+    allowing the user to adjust parameters and see how they effect the signal.
+
+    Args:
+        base_freq: The base frequency of the signal.
+        sample_rate: The sample rate of the signal.
+        duration: The duration of the signal.
+        harmonics: The number of harmonics in the signal.
+        wave_type: The type of wave (sine or cosine).
+        num_signals: The number of signals to generate.
+
+    Returns:
+        None
+
+    Notes:
+        This function is not designed to view external signals.
+    """
     sig_fig, sig_ax = plt.subplots()
     sig_ax.set_title("SIGNAL")
     sig_fig.canvas.header_visible = False
@@ -424,7 +513,19 @@ def sig_viewer(base_freq, sample_rate, duration, harmonics, wave_type, num_signa
 
 
 def im_scale(use_log, im_size, num_bits, im):
-    """Scales image based on normalization, log, resize, and quantization"""
+    """
+    Scales image based on normalization, log, resize, and quantization
+
+    Args:
+        im: The image to scale.
+        num_bits: The number of bits to use for scaling. Accepted values are 8, 16, or 32. Defaults to 16 if input is outside these values.
+        use_log: Whether to use logarithmic scaling.
+        im_size: The size of the output image.
+
+    Returns:
+        The scaled image.
+    """
+
     # calculate the log10 of the image pixels
     if use_log:
         im = np.log10(im - np.min(im) + 1)
@@ -436,7 +537,7 @@ def im_scale(use_log, im_size, num_bits, im):
     # scale image to fit within dynamic range of fixed number of bits
     im = (2 ** int(num_bits) - 1) * (im - np.min(im)) / (np.max(im) - np.min(im))
 
-    # convert image pixels to unsigned INTs based on quatization
+    # convert image pixels to unsigned INTs based on quantization
     if num_bits == 8:
         im = np.uint8(im)
     elif num_bits == 32:
@@ -448,15 +549,6 @@ def im_scale(use_log, im_size, num_bits, im):
 
 
 class HASPDash:
-    """Interactive Dashboard for HASP visualizations
-
-    Args:
-        base_freq
-
-    Returns:
-        None.
-    """
-
     def __init__(
         self,
         base_freq: int,
@@ -917,6 +1009,33 @@ class HASPDash:
 
 
 def HASP_dash(base_freq, sample_rate, duration, noise, bandwidth, num_signals):
+    """
+    Creates a dashboard of the signal, spectogram, FFT, and HASP output.
+
+    This dashboard generates a signal based on the given input and does not accept external signals.
+    The purpose of this visualization is to provide common signal visualizations alongside the HASP
+    results to demonstrate how a variety of parameters effect the HASP algorithm.
+
+    Args:
+        base_freq: The base frequency of the sine wave.
+        sample_rate: The sample rate of the sine wave.
+        duration: The duration of the sine wave.
+        noise: The level of noise to add to the sine wave.
+        wave_type: The type of sine wave to generate ('base', 'square', 'sawtooth', or 'triangle').
+        bandwidth: The bandwidth aroudn the frequency senter to use for the HASP algorithm. To prevent overlap with other harmonics, this value cannot be larger than the base frequency.
+        num_signals: The number of signals to generate.
+        harmonics: The number of harmonics to include in the signal (default=0).
+
+    Returns:
+        A HASPDash object.
+
+    Notes:
+        This function creates a dashboard with four plots: a signal plot, an FFT plot,
+        a spectrogram plot, and a HASP plot. The dashboard is interactive, allowing
+        the user to adjust parameters such as the base frequency, sample rate, and
+        number of harmonics.
+    """
+
     dash = HASPDash(
         base_freq=base_freq,
         sample_rate=sample_rate,
