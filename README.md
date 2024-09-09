@@ -15,7 +15,7 @@ Dimensionally aligned signal projection (DASP) algorithms are used to analyze fa
 
 The DASP library is implemented in Python and contains four types of algorithms for implementing these feature engineering techniques: fixed harmonically aligned signal projection (HASP), decimating HASP, interpolating HASP, and frequency aligned signal projection (FASP). Each algorithm returns a numerical array, which can be visualized as an image. For consistency FASP, which is the terminology used for the short-time Fourier transform, has been implemented as part of the library to provide a similar interface to the STFT of the raw signal. Additionally, the library contains an algorithm to generate artificial signals with basic customizations such as the base frequency, sample rate, duration, number of harmonics, noise, and number of signals.
 
-Finally, the library provides multiple interactive visualizations, each implemented using IPyWidgets and work in a Jupyter environment. A dashboard-style visualization is provided, which contains some common signal-processing visual components (signal, FFT, spectogram) updating in unison with the HASP functions (see Figure 1 below). Seperate from the dashboard, an independent visualization is provided for each of the DASP algorithms as well as the artifical signal generator. These visualizations are included in the library to aid in developing an intuitive understanding how the algorithms are affected by different input signals and parameter selections.
+Finally, the library provides multiple interactive visualizations, each implemented using IPyWidgets and work in a Jupyter environment. A dashboard-style visualization is provided, which contains some common signal-processing visual components (signal, FFT, spectogram) updating in unison with the HASP functions (see screenshot in [Visualizations](#visualization-functions)). Seperate from the dashboard, an independent visualization is provided for each of the DASP algorithms as well as the artifical signal generator. These visualizations are included in the library to aid in developing an intuitive understanding how the algorithms are affected by different input signals and parameter selections.
 
 A detailed breakdown of how these algorithms work can be seen in 'example/algorithm_walkthrough'
 
@@ -36,7 +36,7 @@ The following sections are a breakout of the recommended usage for the available
 ### DASP Algorithms
 <hr>
 
-#### FASP
+#### `fasp()` - Frequency Aligned Signal Projection
 Generates an STFT.
 
 ##### Parameters
@@ -53,7 +53,7 @@ Generates an STFT.
 
     fasp(signal=signal, num_ffts=np.floor(np.sqrt(signal.size / 2)), use_row_norm=True, use_im_norm=True)
 
-#### Fixed HASP
+#### `hasp_fixed()` - Fixed Harmonically Aligned Signal Projection
 Fixed Harmonically Aligned Signal Projection generates a HASP array, using a fixed bandwidth around the frequency center.
 
 ##### Parameters
@@ -81,7 +81,7 @@ hasp_fixed(
 )
 ```
 
-#### Decimating HASP
+#### `hasp_decim()` - Decimating Harmonically Aligned Signal Projection
 Decimating Harmonically Aligned Signal Projection generates a HASP array, allowing bandwidth around the frequency center to grow as the harmonics increase before downsampling each row to the minimum bandwidth size.
 
 ##### Parameters
@@ -107,7 +107,7 @@ hasp_decim(
     use_im_norm=True,
 )
 ```
-#### Interpolating HASP
+#### `hasp_interp()` - Interpolating Harmonically Aligned Signal Projection
 Interpolating Harmonically Aligned Signal Projection generates a HASP array, allowing bandwidth around the frequency center to grow as the harmonics increase before upsampling each row to the maximum bandwidth size.
 
 ##### Parameters
@@ -138,7 +138,7 @@ hasp_interp(
 
 All visualizations are designed to display inside of a jupyter notebook.
 
-#### HASP Dashboard
+#### `HASP_dash()` - HASP Dashboard
 Creates a dashboard of the signal, spectogram, FFT, and HASP output.
 
 This dashboard generates a signal based on the given input and does not accept external signals.
@@ -152,7 +152,7 @@ results to demonstrate how a variety of parameters effect the HASP algorithm.
 * duration (int): The duration of the sine wave, in seconds.
 * noise (float): The level of noise to add to the sine wave.
 * wave_type (string): The type of sine wave to generate ('base', 'square', 'sawtooth', or 'triangle').
-* bandwidth (int): The bandwidth aroudn the frequency senter to use for the HASP algorithm. To prevent overlap with other harmonics, this value cannot be larger than the base frequency.
+* bandwidth (int): The bandwidth around the frequency center to use for the HASP algorithm. To prevent overlap with other harmonics, this value cannot be larger than the base frequency.
 * num_signals (int): The number of signals to add as part of the same sine wave.
 * harmonics (int): The number of harmonics to include in the signal (default=0).
 
@@ -167,12 +167,12 @@ HASP_dash(base_freq = 100, sample_rate = 2000, duration = 1, noise = 0, bandwidt
 ```
 ![HASP Dash](examples/images/hasp_dash_image2.png)
 
-#### FASP Interactive Visualization
+#### `fasp_viz()` FASP Interactive Visualization
 Displays the FASP visualization for the provided signal.
 
 ##### Parameters
 * raw_signal (np.ndarray): The raw time domain signal
-* num_ffts (int): Number of fft slices within the STFT, determined by calculation if not provided.
+* num_ffts (int): Number of FFT slices within the STFT, determined by calculation if not provided.
 * color_map (string): The colormap of the image, defaults to "plasma" if none provided.
 
 Whether to use row normalization, image normalization, and color map selection are able to be editted in real time within the visualization.
@@ -186,8 +186,8 @@ fasp_viz(raw_signal=signal)
 ```
 ![FASP Image](examples/images/fasp_image1.png)
 
-#### HASP Interactive Visualization
-Displays the HASP visualization for the provided signal. The user can select wihich version of HASP to use within the visualization.
+#### `hasp_viz()` HASP Interactive Visualization
+Displays the HASP visualization for the provided signal. The user can select which version of HASP to use within the visualization.
 
 ##### Parameters
 * signal (np.ndarray): The input signal to visualize.
@@ -210,7 +210,7 @@ hasp_viz(signal = signal, freq_center = 100, sample_rate=1_000)
 
 ### Other Functions
 
-#### Custom Sine Wave Generator
+#### `sine_wave_creator()` - Custom Sine Wave Generator
 Creates a sine wave signal with specified characteristics.
 
 ##### Parameters
@@ -238,7 +238,7 @@ signal, time = sine_wave_creator(
 )
 ```
 
-#### Custom Sine Wave Interactive Visualization
+#### `sig_viewer()` - Custom Sine Wave Interactive Visualization
 Generates a signal based on the given inputs and creates an interactive visualization, allowing the user to adjust parameters and see how they effect the signal.
 
 ##### Parameters
