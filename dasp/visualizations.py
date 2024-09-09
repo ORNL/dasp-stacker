@@ -67,7 +67,7 @@ def fasp_viz(raw_signal: np.ndarray, num_ffts: int = 0, color_map="plasma"):
         color_map (string): The colormap of the image, defaults to "plasma" if none provided.
 
     Returns:
-        None.
+        UI: The object containing the visualizations.
     """
 
     # fasp_update needs to be called multiple times, this is for better readability
@@ -441,7 +441,7 @@ def sig_update(
         duration: The duration of the sine wave.
         harmonics: The number of harmonics included in the signal.
         noise: The level of noise to add to the signal.
-        wave_type: The type of wave to generate ('sine' or 'cosine').
+        wave_type: The type of sine wave to generate ('base', 'square', 'sawtooth', or 'triangle').
         num_signals: The number of signals to generate.
         fig: The figure to plot the signal on.
         ax: The axes to plot the signal on.
@@ -474,7 +474,7 @@ def sig_viewer(base_freq, sample_rate, duration, harmonics, wave_type, num_signa
         sample_rate: The sample rate of the signal.
         duration: The duration of the signal.
         harmonics: The number of harmonics in the signal.
-        wave_type: The type of wave (sine or cosine).
+        wave_type: The type of sine wave to generate ('base', 'square', 'sawtooth', or 'triangle').
         num_signals: The number of signals to generate.
 
     Returns:

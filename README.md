@@ -7,7 +7,7 @@
 2. [Features/Usage](#features--usage)
     * [DASP Algorithms](#dasp-algorithms)
     * [Visualizations](#visualization-functions)
-    * [Other](#other-functions)
+    * [Other Functions](#other-functions)
 3. [Installation](#installation)
 
 ## Summary
@@ -70,14 +70,16 @@ Fixed Harmonically Aligned Signal Projection generates a HASP array, using a fix
 
 ##### Example Usage
 
-    hasp_fixed(
-        sample_rate=10_000,
-        fft=fft,
-        bandwidth=1_000,
-        freq_center=1_000,
-        use_row_norm=True,
-        use_im_norm=True,
-        )
+```python
+hasp_fixed(
+    sample_rate=10_000,
+    fft=fft,
+    bandwidth=1_000,
+    freq_center=1_000,
+    use_row_norm=True,
+    use_im_norm=True,
+)
+```
 
 #### Decimating HASP
 Decimating Harmonically Aligned Signal Projection generates a HASP array, allowing bandwidth around the frequency center to grow as the harmonics increase before downsampling each row to the minimum bandwidth size.
@@ -95,16 +97,16 @@ Decimating Harmonically Aligned Signal Projection generates a HASP array, allowi
 * The decimating HASP array -- a 2D NumPy array.
 
 ##### Example Usage
-
-    hasp_decim(
-        sample_rate=10_000,
-        fft=fft,
-        bandwidth=1_000,
-        freq_center=1_000,
-        use_row_norm=True,
-        use_im_norm=True,
-        )
-
+```python
+hasp_decim(
+    sample_rate=10_000,
+    fft=fft,
+    bandwidth=1_000,
+    freq_center=1_000,
+    use_row_norm=True,
+    use_im_norm=True,
+)
+```
 #### Interpolating HASP
 Interpolating Harmonically Aligned Signal Projection generates a HASP array, allowing bandwidth around the frequency center to grow as the harmonics increase before upsampling each row to the maximum bandwidth size.
 
@@ -121,24 +123,147 @@ Interpolating Harmonically Aligned Signal Projection generates a HASP array, all
 * The interpolating HASP array -- a 2D NumPy array.
 
 ##### Example Usage
-
-    hasp_interp(
-        sample_rate=10_000,
-        fft=fft,
-        bandwidth=1_000,
-        freq_center=1_000,
-        use_row_norm=True,
-        use_im_norm=True,
-        )
+```python
+hasp_interp(
+    sample_rate=10_000,
+    fft=fft,
+    bandwidth=1_000,
+    freq_center=1_000,
+    use_row_norm=True,
+    use_im_norm=True,
+    )
+```
 
 ### Visualization Functions
 
---- IN PROGRESS ---
+All visualizations are designed to display inside of a jupyter notebook.
 
+#### HASP Dashboard
+Creates a dashboard of the signal, spectogram, FFT, and HASP output.
+
+This dashboard generates a signal based on the given input and does not accept external signals.
+The purpose of this visualization is to provide common signal visualizations alongside the HASP
+results to demonstrate how a variety of parameters effect the HASP algorithm.
+
+##### Parameters
+
+* base_freq (int): The base frequency of the sine wave, in hertz
+* sample_rate (int): The sample rate of the sine wave as sample per second
+* duration (int): The duration of the sine wave, in seconds.
+* noise (float): The level of noise to add to the sine wave.
+* wave_type (string): The type of sine wave to generate ('base', 'square', 'sawtooth', or 'triangle').
+* bandwidth (int): The bandwidth aroudn the frequency senter to use for the HASP algorithm. To prevent overlap with other harmonics, this value cannot be larger than the base frequency.
+* num_signals (int): The number of signals to add as part of the same sine wave.
+* harmonics (int): The number of harmonics to include in the signal (default=0).
+
+There are additional interactive parameters that are within the visualization that are only for the HASP algorithm, including the selection of which HASP algorithm to use, whether to use row normalization, image normalization, and image scaling, as well as adjustable sliders for the frequency center and bandwidth. These are only edittable within the dashboard.
+
+##### Returns
+* An ipywidget.
+
+##### Example Usage
+```python
+HASP_dash(base_freq = 100, sample_rate = 2000, duration = 1, noise = 0, bandwidth = 50, num_signals=1)
+```
+![HASP Dash](examples/images/hasp_dash_image2.png)
+
+#### FASP Interactive Visualization
+Displays the FASP visualization for the provided signal.
+
+##### Parameters
+* raw_signal (np.ndarray): The raw time domain signal
+* num_ffts (int): Number of fft slices within the STFT, determined by calculation if not provided.
+* color_map (string): The colormap of the image, defaults to "plasma" if none provided.
+
+Whether to use row normalization, image normalization, and color map selection are able to be editted in real time within the visualization.
+
+##### Returns
+* An ipywidget.
+
+##### Example Usage
+```python
+fasp_viz(raw_signal=signal)
+```
+![FASP Image](examples/images/fasp_image1.png)
+
+#### HASP Interactive Visualization
+Displays the HASP visualization for the provided signal. The user can select wihich version of HASP to use within the visualization.
+
+##### Parameters
+* signal (np.ndarray): The input signal to visualize.
+* freq_center (int): The frequency center of the input signal.
+* sample_rate (int): The sample rate of the input signal.
+
+There are additional interactive parameters that are only edittable within the visualization, including:
+* The selection of which HASP algorithm to use
+* Whether to use row normalization, image normalization, and image scaling
+* Adjustable sliders for the frequency center and bandwidth.
+
+##### Returns
+* An ipywidget.
+
+##### Example Usage
+```python
+hasp_viz(signal = signal, freq_center = 100, sample_rate=1_000)
+```
+![HASP Image](examples/images/hasp_viz_image1.png)
 
 ### Other Functions
 
---- IN PROGRESS ---
+#### Custom Sine Wave Generator
+Creates a sine wave signal with specified characteristics.
+
+##### Parameters
+* base_freq (int): The base frequency of the sine wave.
+* sample_rate (int): The sample rate of the sine wave.
+* duration (int): The duration of the sine wave.
+* noise (float): The level of noise to add to the sine wave.
+* wave_type (string): The type of sine wave to generate ('base', 'square', 'sawtooth', or 'triangle').
+* num_signals (int): The number of signals to add as part of the same sine wave.
+* harmonics (int): The number of harmonics to include in the signal (default=0).
+
+##### Returns
+* out_signal: The generated sine wave signal.
+* time: The associated time array of the generated signal.
+
+##### Example Usage
+```python
+signal, time = sine_wave_creator(
+    base_freq=100,
+    sample_rate=1_000,
+    duration=1,
+    wave_type="base",
+    num_signals=2,
+    noise=.5,
+)
+```
+
+#### Custom Sine Wave Interactive Visualization
+Generates a signal based on the given inputs and creates an interactive visualization, allowing the user to adjust parameters and see how they effect the signal.
+
+##### Parameters
+* base_freq (int): The base frequency of the signal, in hertz
+* sample_rate (int): The sample rate of the signal, in sample per second
+* duration (int): The duration of the signal, in seconds
+* harmonics (int): The number of harmonics in the signal.
+* wave_type (string): The type of sine wave to generate ('base', 'square', 'sawtooth', or 'triangle').
+* num_signals (int): The number of signals to add as part of the same sine wave.
+
+##### Returns
+* None
+
+##### Example Usage
+```python
+sig_viewer(
+    base_freq=10,
+    sample_rate=1000,
+    duration=1,
+    harmonics=0,
+    wave_type="base",
+    num_signals=4,
+)
+```
+![Signal Viewer Image](examples/images/sig_viewer_image1.png)
 
 ## Installation
 ```python
