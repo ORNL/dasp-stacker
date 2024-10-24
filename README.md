@@ -31,6 +31,9 @@ pip install dasp-stacker
 pytest
 ```
 
+## Contributing
+See [CONTRIBUTING.md](CONTRIBUTING.md)
+
 ## Features / Usage
 
 Here are some of the main features of the dasp-stacker library:
