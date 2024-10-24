@@ -1,5 +1,7 @@
 """Dimensionally Aligned Signal Processing Algorithms"""
 
+from typing import Union
+
 import numpy as np
 from scipy import signal
 from scipy.ndimage import uniform_filter
@@ -95,7 +97,7 @@ def hasp_fixed(
     max_possible_harmonics = int(np.floor((fft.size - bw_points / 2) / (fc_index)))
 
     # if the user input more harmonics than what's possible, or no harmonics, default to max
-    if (max_harmonics > max_possible_harmonics) | (max_harmonics < 1):
+    if (max_harmonics > max_possible_harmonics) or (max_harmonics < 1):
         max_harmonics = max_possible_harmonics
 
     # shape/fill zero array
@@ -169,7 +171,7 @@ def hasp_decim(
     max_possible_harmonics = int(np.floor(fft.size / (fc_index + bw_points / 2)))
 
     # if the user input more harmonics than what's possible, or no harmonics, default to max
-    if (max_harmonics > max_possible_harmonics) | (max_harmonics < 1):
+    if (max_harmonics > max_possible_harmonics) or (max_harmonics < 1):
         max_harmonics = max_possible_harmonics
 
     # shape/fill zero array
@@ -242,7 +244,7 @@ def hasp_interp(
     max_possible_harmonics = int(np.floor(fft.size / (fc_index + bw_points / 2)))
 
     # if the user input more harmonics than what's possible, or no harmonics, default to max
-    if (max_harmonics > max_possible_harmonics) | (max_harmonics < 1):
+    if (max_harmonics > max_possible_harmonics) or (max_harmonics < 1):
         max_harmonics = max_possible_harmonics
 
     # this would be the maximum number of bins/points in the last possible harmonic
@@ -321,7 +323,7 @@ def std_image_filter_2d(image: np.ndarray) -> np.ndarray:
 # -- OTHER -- #
 
 
-def gen_fft(signal: list[float] | np.ndarray) -> np.ndarray:
+def gen_fft(signal: Union[list[float], np.ndarray]) -> np.ndarray:
     """Generates real fft from input signal.
 
     Args:
