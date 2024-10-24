@@ -3,12 +3,14 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 ## Table of Contents
+
 1. [Summary](#summary)
-2. [Features/Usage](#features--usage)
+2. [Installation](#installation)
+3. [Testing](#testing)
+4. [Features/Usage](#features--usage)
     * [DASP Algorithms](#dasp-algorithms)
     * [Visualizations](#visualization-functions)
     * [Other Functions](#other-functions)
-3. [Installation](#installation)
 
 ## Summary
 Dimensionally aligned signal projection (DASP) algorithms are used to analyze fast Fourier transforms (FFTs) and generate visualizations that help focus on the harmonics for specific signals. At a high level, these algorithms extract the FFT segments around each harmonic frequency center, and then align them in equally sized arrays ordered by increasing distance from the base frequency. This allows for a focused view of the harmonic frequencies, which, among other use cases, can enable machine learning algorithms to more easily identify salient patterns. This work seeks to provide an effective open-source implementation of the DASP algorithms as well as functionality to help explore and test how these algorithms work with an interactive dashboard and signal-generation tool.
@@ -18,6 +20,16 @@ The DASP library is implemented in Python and contains four types of algorithms 
 Finally, the library provides multiple interactive visualizations, each implemented using IPyWidgets and work in a Jupyter environment. A dashboard-style visualization is provided, which contains some common signal-processing visual components (signal, FFT, spectogram) updating in unison with the HASP functions (see screenshot in [Visualizations](#visualization-functions)). Seperate from the dashboard, an independent visualization is provided for each of the DASP algorithms as well as the artifical signal generator. These visualizations are included in the library to aid in developing an intuitive understanding how the algorithms are affected by different input signals and parameter selections.
 
 A detailed breakdown of how these algorithms work can be seen in 'example/algorithm_walkthrough'
+
+## Installation
+```python
+pip install dasp-stacker
+```
+
+## Testing
+```
+pytest
+```
 
 ## Features / Usage
 
@@ -264,8 +276,3 @@ sig_viewer(
 )
 ```
 ![Signal Viewer Image](examples/images/sig_viewer_image1.png)
-
-## Installation
-```python
-pip install dasp-stacker
-```
