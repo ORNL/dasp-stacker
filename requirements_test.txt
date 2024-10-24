@@ -1,0 +1,8 @@
+
+numpy
+scipy
+scikit-image
+pytest
+matplotlib
+h5py
+ipympl
