@@ -31,11 +31,11 @@ bibliography: paper.bib
 ---
 # Summary
 
-Dimensionally aligned signal projection (DASP) algorithms are used to analyze fast Fourier transforms (FFTs) and generate visualizations that help focus on the harmonics for specific signals. At a high level, these algorithms extract the FFT segments around each harmonic frequency center, and then align them in equally sized arrays ordered by increasing distance from the base frequency. This allows for a focused view of the harmonic frequencies, which, among other use cases, can enable machine learning algorithms to more easily identify salient patterns. This work seeks to provide an effective open-source implementation of the DASP algorithms proposed in [@7907255] as well as functionality to help explore and test how these algorithms work with an interactive dashboard and signal-generation tool.
+Dimensionally aligned signal projection (DASP) algorithms are used to analyze fast Fourier transforms (FFTs) and generate visualizations that help focus on the harmonics for specific signals. At a high level, these algorithms extract the FFT segments around each harmonic frequency center, and then align them in equally sized arrays ordered by increasing distance from the base frequency. This allows for a focused view of the harmonic frequencies, which, among other use cases, can enable machine learning algorithms to more easily identify salient patterns. This work seeks to provide an effective open-source implementation of the DASP algorithms proposed by @7907255 as well as functionality to help explore and test how these algorithms work with an interactive dashboard and signal-generation tool.
 
-The DASP library is implemented in Python and contains four types of algorithms for implementing these feature engineering techniques: fixed harmonically aligned signal projection (HASP), decimating HASP, interpolating HASP, and frequency aligned signal projection (FASP). Each algorithm returns a numerical array, which can be visualized as an image. The HASP algorithms are variations of the algorithms originally presented in [@7907255]. For consistency FASP, which is the terminology used for the short-time Fourier transform, has been implemented as part of the library to provide a similar interface to the STFT of the raw signal. Additionally, the library contains an algorithm to generate artificial signals with basic customizations such as the base frequency, sample rate, duration, number of harmonics, noise, and number of signals.
+The DASP library is implemented in Python and contains four types of algorithms for implementing these feature engineering techniques: fixed harmonically aligned signal projection (HASP), decimating HASP, interpolating HASP, and frequency aligned signal projection (FASP). Each algorithm returns a numerical array, which can be visualized as an image. The HASP algorithms are variations of the algorithms originally presented by @7907255. For consistency, FASP, which is the terminology used for the short-time Fourier transform (STFT), has been implemented as part of the library to provide a similar interface to the STFT of the raw signal. Additionally, the library contains an algorithm to generate artificial signals with basic customizations such as the base frequency, sample rate, duration, number of harmonics, noise, and number of signals.
 
-Finally, the library provides multiple interactive visualizations, each implemented using IPyWidgets and work in a Jupyter environment. A dashboard-style visualization is provided, which contains some common signal-processing visual components (signal, FFT, spectogram) updating in unison with the HASP functions (see Figure 1 below). Seperate from the dashboard, an independent visualization is provided for each of the DASP algorithms as well as the artifical signal generator. These visualizations are included in the library to aid in developing an intuitive understanding how the algorithms are affected by different input signals and parameter selections.
+Finally, the library provides multiple interactive visualizations, each of which is implemented using IPyWidgets and works in a Jupyter environment. A dashboard-style visualization is provided, which contains some common signal-processing visual components (signal, FFT, spectogram) updating in unison with the HASP functions (see Figure 1 below). Separate from the dashboard, an independent visualization is provided for each of the DASP algorithms as well as for the artifical signal generator. These visualizations are included in the library to aid in developing an intuitive understanding how the algorithms are affected by different input signals and parameter selections.
 
  ![Interactive dashboard displaying the custom sine wave (upper left), spectogram (upper right), FFT with added red bands around the bandwidth (bottom left), and Fixed HASP output (bottom right)](minidash_v1.png)
 
@@ -48,7 +48,7 @@ Although the DASP algorithms have proven useful for signal-feature extraction, a
 
 # Algorithm Details
 
-This section describes technical details of each algorithm included in the DASP library, shows an example figure of the output using a data sample which collected the electromagnetic spectrum around two fluorescent lightbulbs at a sample rate of 2 megasamples per second, and provides pseudo code for the general structure of the algorithm.
+This section describes technical details of each algorithm included in the DASP library, shows an example figure of the output using a data sample which collected the electromagnetic spectrum around two fluorescent lightbulbs at a sample rate of 2 megasamples per second, and provides pseudocode for the general structure of the algorithm.
 
 ## Harmonically Aligned Signal Projection
 Each HASP algorithm follows the general structure of first calculating the appropriate step size to locate the index of each harmonic center, extracting the value at each index (harmonic center) along with an equal number of adjacent points from each side, and then unioning these equally sized segments before outputting them as one HASP array.
@@ -56,19 +56,19 @@ Each HASP algorithm follows the general structure of first calculating the appro
 ### Fixed
 Fixed HASP groups each harmonic center with its surrounding points using a fixed number of points. See Figure 2 below.
 
-![(Left) Normalized and scaled fixed HASP image with a base frequency of 45,033 hertz. (Right) Fixed HASP pseudo code.](fixed_hasp_with_pseudo.png)
+![(Left) Normalized and scaled fixed HASP image with a base frequency of 45,033 hertz. (Right) Fixed HASP pseudocode.](fixed_hasp_with_pseudo.png)
 
 ### Decimating
 Decimating HASP groups each harmonic center with its surrounding points, allowing the number of points to grow as the harmonics (and frequency) increase, and then decimates each harmonic (row) to be equal to the number of points in the row with the lowest frequency (and by extension the smallest number of points). See Figure 3 below.
 
-![(Left) Normalized and scaled decimating HASP image with a base frequency of 45,033 hertz. (Right) Decimating HASP pseudo code.](decimating_hasp_with_pseudo.png)
+![(Left) Normalized and scaled decimating HASP image with a base frequency of 45,033 hertz. (Right) Decimating HASP pseudocode.](decimating_hasp_with_pseudo.png)
 
 This version of the algorithm increases resolution at lower harmonics.
 
 ### Interpolating
 Interpolating HASP groups each harmonic center with its surrounding points, allowing the number of points to grow as the harmonics (and frequency) increase, and then interpolates each harmonic (row) to be equal to the number of points in the highest frequency (and by extension the largest row). See Figure 4 below.
 
-![(Left) Normalized and scaled interpolating HASP image with a base frequency of 45,033 hertz. (Right) Interpolating HASP pseudo code.](interpolating_hasp_with_pseudo.png)
+![(Left) Normalized and scaled interpolating HASP image with a base frequency of 45,033 hertz. (Right) Interpolating HASP pseudocode.](interpolating_hasp_with_pseudo.png)
 
 This version of the algorithm increases resolution at higher harmonics.
 
@@ -100,13 +100,13 @@ FASP simply creates a spectogram of the input signal. See Figure 5 below.
 
 -->
 
-![(Left) Normalized FASP image with normalized rows. (Right) FASP pseudo code.](fasp_with_pseudo.png)
+![(Left) Normalized FASP image with normalized rows. (Right) FASP pseudocode.](fasp_with_pseudo.png)
 
 # Audience
 
 The target audience for a DASP algorithms library is researchers, data scientists, and engineers in the field of signal processing who want to use machine learning as a tool for identifying patterns in signals.
 
-This open-source software is licensed under a BSD-3 clause license, is registered on [DOE Code](https:// doi:10.11578/dc.20220208.1), and is available on [GitHub](https://github.com/ORNL/....). The package is also pip installable with ``pip install dasp-stacker``. Finally, linting for this project is performed using black [@black-linter] and flake8 [@flake8] as well as other pre-commit hooks with pre-commit [@precommit].
+This open-source software is licensed under a BSD-3 clause license, is registered on [DOE Code](https:// doi:10.11578/dc.20220208.1), and is available on [GitHub](https://github.com/ORNL/dasp-stacker). The package is also pip installable with ``pip install dasp-stacker``. Finally, linting for this project is performed using black [@black-linter] and flake8 [@flake8] as well as other pre-commit hooks with pre-commit [@precommit].
 
 # Acknowledgements
 
